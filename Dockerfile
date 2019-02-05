@@ -64,4 +64,9 @@ mv .build /usr/local/bin/swift-protobuf
 
 ENV PATH /usr/local/bin/swift-protobuf/release:$PATH
 
+RUN apt-get install -y nodejs \
+npm && \
+npm install -S ts-protoc-gen @types/google-protobuf google-protobuf grpc-web-client && \
+ln -s /usr/bin/nodejs /usr/bin/node
+
 WORKDIR /proto
