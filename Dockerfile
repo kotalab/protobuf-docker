@@ -26,7 +26,11 @@ ENV GOROOT /usr/local/go
 ENV GOPATH $HOME/go
 ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
 
-RUN go get -u github.com/golang/protobuf/protoc-gen-go
+RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway && \
+go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger && \
+go get -u github.com/golang/protobuf/protoc-gen-go && \
+go get -d github.com/lyft/protoc-gen-validate && \
+cd $GOPATH/src/github.com/lyft/protoc-gen-validate && make build
 
 RUN curl -O https://swift.org/builds/swift-4.2.1-release/ubuntu1604/swift-4.2.1-RELEASE/swift-4.2.1-RELEASE-ubuntu16.04.tar.gz && \
 tar xzvf swift-4.2.1-RELEASE-ubuntu16.04.tar.gz && \
@@ -36,7 +40,7 @@ ENV PATH /usr/local/bin/swift-4.2.1-RELEASE-ubuntu16.04/usr/bin:$PATH
 
 RUN swiftc -v
 
-RUN apt-get install -y cmake \
+RUN apt-get clean && apt-get update && apt-get install -y cmake \
 ninja-build \
 clang \
 python \
@@ -66,7 +70,7 @@ ENV PATH /usr/local/bin/swift-protobuf/release:$PATH
 
 RUN apt-get install -y nodejs \
 npm && \
-npm install -S ts-protoc-gen @types/google-protobuf google-protobuf grpc-web-client && \
+npm install -S ts-protoc-gen @types/google-protobuf google-protobuf @improbable-eng/grpc-web && \
 ln -s /usr/bin/nodejs /usr/bin/node
 
 WORKDIR /proto
