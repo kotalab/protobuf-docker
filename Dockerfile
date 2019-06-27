@@ -29,14 +29,14 @@ ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
 RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway && \
 go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger && \
 go get -u github.com/golang/protobuf/protoc-gen-go && \
-go get -d github.com/lyft/protoc-gen-validate && \
-cd $GOPATH/src/github.com/lyft/protoc-gen-validate && make build
+go get -d github.com/envoyproxy/protoc-gen-validate && \
+cd $GOPATH/src/github.com/envoyproxy/protoc-gen-validate && make build
 
-RUN curl -O https://swift.org/builds/swift-4.2.1-release/ubuntu1604/swift-4.2.1-RELEASE/swift-4.2.1-RELEASE-ubuntu16.04.tar.gz && \
-tar xzvf swift-4.2.1-RELEASE-ubuntu16.04.tar.gz && \
-mv swift-4.2.1-RELEASE-ubuntu16.04 /usr/local/bin/
+RUN curl -O https://swift.org/builds/swift-5.0.1-release/ubuntu1604/swift-5.0.1-RELEASE/swift-5.0.1-RELEASE-ubuntu16.04.tar.gz && \
+tar xzvf swift-5.0.1-RELEASE-ubuntu16.04.tar.gz && \
+mv swift-5.0.1-RELEASE-ubuntu16.04 /usr/local/bin/
 
-ENV PATH /usr/local/bin/swift-4.2.1-RELEASE-ubuntu16.04/usr/bin:$PATH
+ENV PATH /usr/local/bin/swift-5.0.1-RELEASE-ubuntu16.04/usr/bin:$PATH
 
 RUN swiftc -v
 
